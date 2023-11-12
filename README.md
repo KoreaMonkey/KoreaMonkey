@@ -375,6 +375,8 @@ int compute_postfix_expression(const char* expression)
 }
 ```
 
+ compute_postfix_expression 함수는 postfix 입력을 받아 연산을 실행한 후 결과를 반환하는 함수이다. 숫자와 4개의 operator 이외의 유효하지 않은 입력이 들어오면 에러메세지를 출력하고 -1을 반환한다. 또한 operand와 operator이 충분하지 않은 경우에도 에러메세지를 출력하고 -1을 반환한다. 실행방법으로는 우선 연산에 사용할 스택을 만든다. expression에 저장된 값이 NULL을 만날 때 까지 입력을 받아 숫자가 들어오면 자료형을 변경하여 스택에 push하고 operator이 들어오면 스택 제일 위에 있는 숫자 2개를 꺼내어 연산을 한 후 다시 스택에 집어넣도록 하였다. 마지막까지 연산이 끝난 후 결과를 result변수에 저장하여 반환하도록 하였다. 위에서 선언한 creat_stack, push, pop, perform_operation을 사용하였다.
+
  
  
 
