@@ -187,4 +187,26 @@ void rotate_circularLinkedList(struct linked_list* list, int rotate_num) {
 }
 ```
 
-  rotate_circularLinkedList 함수는 circular linked list를 rotate_num만큼 회전시켜주는 함수이다. 만약 리스트의 타입이 circular list가 아니라면 에러메세지를 출력하고 함수를 탈출하도록 하였다. 회전시켜주는 방법으로는 head와 tail의 next주소를 rotate_num만큼 현재 가리키는 노드의 다음노드의 주소로 변경시킴으로 실행한다.
+  rotate_circularLinkedList 함수는 circular linked list를 rotate_num만큼 회전시켜주는 함수이다. 만약 리스트의 타입이 circular list가 아니라면 에러메세지를 출력하고 함수를 탈출하도록 하였다. 회전시켜주는 방법으로는 rotate_num과 리스트 안의 총 노드의 갯수와의 관계를 이용하여 rotate_num을 적절한 값으로 변경시킨 후 head와 tail의 next주소를 rotate_num만큼 현재 가리키는 노드의 다음노드의 주소로 변경시킴으로 실행한다.
+
+
+
+
+### 스택 관련 함수
+
+
+```c
+int check_empty(struct Stack* stack) 
+//Check if the stack is empty through the values of top.
+{
+	if (stack->top == -1) {
+		return 1; // Stack is empty
+	}
+	else {
+		return 0; // Stack is not empty
+	}
+}
+
+```
+
+ check_empty 함수는 스택이 비어있는지 확인하여 비어있으면 1, 그렇지 않으면 0을 반환하는 함수이다. 실행 방법으로는 top에 저장된 값이 -1일 경우 비어있는 경우, 그렇지 않은 경우는 비어있지 않다는 점을 이용하였다.
