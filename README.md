@@ -1,5 +1,8 @@
 ## 프로젝트 설명
 
+### 리스트 관련 함수
+
+
 ``` C
 void remove_node(struct linked_list* list, int node_location) 
 //This function removes a node with node_location.
@@ -58,3 +61,5 @@ void remove_node(struct linked_list* list, int node_location)
 }
 
 ```
+
+void remove_node 함수는 노드를 지우는 함수로 
