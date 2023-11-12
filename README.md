@@ -209,4 +209,20 @@ int check_empty(struct Stack* stack)
 
 ```
 
- check_empty 함수는 스택이 비어있는지 확인하여 비어있으면 1, 그렇지 않으면 0을 반환하는 함수이다. 실행 방법으로는 top에 저장된 값이 -1일 경우 비어있는 경우, 그렇지 않은 경우는 비어있지 않다는 점을 이용하였다.
+ check_empty 함수는 스택이 비어있는지 확인하여 비어있으면 1, 그렇지 않으면 0을 반환하는 함수이다. 실행 방법으로는 top에 저장된 값이 -1일 경우 비어있고, 그렇지 않은 경우는 비어있지 않다는 점을 이용하였다.
+
+ ```c
+int check_full(struct Stack* stack) 
+//Check if the stack is full through the values of top.
+{
+	if (stack->top == MAX_SIZE - 1) {
+		return 1; // Stack is full
+	}
+	else {
+		return 0; // Stack is not full
+	}
+}
+
+```
+
+ check_full 함수는 스택이 가득차있는지 확인하여 가득차있으면 1, 그렇지 않으면 0을 반환하는 함수이다. 실행 방법으로는 top에 저장된 값이 MAX_SIZE-1일 경우 가득 차있고, 그렇지 않은 경우는 가득 차있지 않다는 점을 이용하였다.
