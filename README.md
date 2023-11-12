@@ -226,3 +226,157 @@ int check_full(struct Stack* stack)
 ```
 
  check_full 함수는 스택이 가득차있는지 확인하여 가득차있으면 1, 그렇지 않으면 0을 반환하는 함수이다. 실행 방법으로는 top에 저장된 값이 MAX_SIZE-1일 경우 가득 차있고, 그렇지 않은 경우는 가득 차있지 않다는 점을 이용하였다.
+
+ ```c
+int push(struct Stack* stack, int item)
+//This function pushes the given item onto the stack if there is space.
+{
+	if (check_full(stack)) {
+		printf("“Stack overflow: Cannot push %d onto the stack.\n", item);
+		return -1; 
+		//If the stack is already full, it prints an error message and returns an error value -1.
+	}
+	else {
+		stack->top += 1;
+		stack->stk[stack->top] = item;
+		//If the stack is not full, add 1 to the top and assign the value of the item to that position.
+	}
+	return 1;
+}
+```
+
+ push 함수는 스택 안으로 주어진 값을 집어넣는 함수이다. check_full 함수를 활용하여 스택이 가득 차있는지 확인하여 가득 차있따면 에러메세지를 출력하고 -1을 반환하도록 하였다. 실행방법은 스택이 가득 차있지 않은 경우에 top의 값에 1을 더한 자리에 item을 저장하는 방식으로 실행한다.
+
+  ```c
+int pop(struct Stack* stack) 
+//This function removes and returns the top item from the stack.
+{
+	if (check_empty(stack)) {
+		printf("Stack underflow: Cannot pop from an empty stack.\n");
+		return -1;
+		//If the stack is empty, it prints an error message and returns an error value -1.
+	}
+	else{
+		int out = stack->stk[stack->top];
+		stack->top -= 1;
+		return out;
+		//If the stack is not empty, store and return the value at the highest position in the variable out. And subtract 1 from the value of the top.
+	}
+}
+
+```
+
+ pop 함수는 스택의 제일 위에 있는 값을 반환한 후 스택에서 삭제하는 함수이다. check_empty 함수를 활용하여 스택이 비어있는지 확인하여 비어있다면 에러메세지를 출력하고 -1을 반환하도록 하였다. 실행방법은 out이라는 변수를 선언하여 스택의 가장 위에 있는 값을 저장시킨 후 반환하고, top 값은 1 감소시키는 방법으로 실행한다.
+
+
+ ```c
+int peek(struct Stack* stack) 
+//This function returns the top item from the stack without removing it.
+{
+	if (check_empty(stack)) {
+		printf("Stack is empty.\n");
+		return -1; 
+		//If the stack is empty, it prints an error message and returns an error value -1.
+	}
+	else {
+		int out = stack->stk[stack->top];
+		return out;
+		//If the stack is not empty, store and return the value at the highest position in the variable out.
+	}
+}
+```
+
+ peek 함수는 스택의 제일 위에 있는 값을 삭제하지 않고 반환하는 함수이다. check_empty 함수를 활용하여 스택이 비어있는지 확인하여 비어있다면 에러메세지를 출력하고 -1을 반환하도록 하였다. 실행방법은 out이라는 변수를 선언하여 스택의 가장 위에 있는 값을 저장시킨 후 반환하는 방법으로 실행한다.
+
+ ```c
+int perform_operation(int operand_1, int operand_2, char operator) 
+//This function performs an elementary arithmetic operation on two operands based on the specified operator (+, -, *, / ).So, it returns the result of the calculation.
+{
+	int result;
+
+	if (operator == '+') {
+		result = operand_1 + operand_2;
+	}
+	else if (operator == '-') {
+		result = operand_1 - operand_2;
+	}
+	else if (operator == '*') {
+		result = operand_1 * operand_2;
+	}
+	else if (operator == '/') {
+		if (operand_2 == 0) {
+			printf("Division by zero is not allowed.\n");
+			return -1; 
+			//If division by zero occurs, it prints and error message and returns an error value - 1.
+		}
+		else {
+			result = operand_1 / operand_2;
+		}
+	}
+	//When four operators (+, -, *, /) enter, the operation is executed, and the result is stored in the result.
+
+	else {
+		printf("Invalid operator: %c.\n", operator);
+		return -1; 
+		//If the operator is not one of the supported operators, it prints and error message and returns an error value - 1.
+	}
+
+	return result;
+	//Returns the operation result.
+}
+```
+
+ perform_operation 함수는 operand 두개를 입력받아 사칙연산을 하는 함수이다. 나눗셈을 실행할 때 나누려는 숫자가 0이거나 operator이 +-*/ 이외의 값이면 에러메세지를 출력하고 -1을 반환한다. 실행방법으로는 operator 의 종류에 따라 경우를 나누고 result라는 변수를 선언해 연산 결과를 result에 저장시킨 후 반환하는 방법으로 실행한다. 
+
+ ```c
+int compute_postfix_expression(const char* expression) 
+//This function computes a postfix expression and returns the result.
+{
+	int result;
+	struct Stack* stack = create_stack(); 
+	//Creates an empty stack for operand and intermediate results.
+	while (*expression != '\0') 
+	//Because the last digit in the char array is NULL, the operation ends when it meets NULL.
+	{
+		if (*expression >= '0' && *expression <= '9')
+		//When a digit comes in.
+		{
+			int digit = *expression - '0';
+			push(stack, digit);
+			//If the character is a digit, push it onto the stack after converting from char to int.
+		}
+		else if (*expression == '+' || *expression == '-' || *expression == '*' || *expression == '/')
+		//When a operator comes in.
+		{
+			if (stack->top <= 0) {
+				printf("Invalid expression: Not enough operators or operands");
+				return -1;
+				//If there are not enough operands or operators to compute the expression correctly, it prints an error message and returns an error value -1.
+			}
+			else {
+				int operand1 = pop(stack);
+				int operand2 = pop(stack);
+				int value;
+				value = perform_operation(operand1, operand2 , *expression);
+				push(stack, value);
+				//If the character is an operator (+, -, *, / ), perform an operation using the function perform_operation.And push the result onto the stack.
+			}
+		}
+		else {
+			printf("Invalid character in the expression : %c", *expression);
+			return -1;
+			//If there an invalid character is encountered, it prints an error message and returns an error value - 1.
+		}
+		expression++;
+	}
+    result = stack->stk[0];
+	return result;
+	//Return result.
+}
+```
+
+ 
+ 
+
+
+
