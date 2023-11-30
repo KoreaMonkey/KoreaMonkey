@@ -51,4 +51,33 @@ void deleteHeap(HEAP h)
 }
 ```
 
- deleteHeap 함수는 heap을 삭제하는 함수이다. heap을 삭제할 때 배열의 모든 정보를 NULL처리 해준 다음 메모리 할당을 해제해주었고, 전체 heap 또한 삭제해주었다.   
+ deleteHeap 함수는 heap을 삭제하는 함수이다. heap을 삭제할 때 배열의 모든 노드를 NULL처리 해준 다음 메모리 할당을 해제해주었고, 전체 heap 또한 삭제해주었다. 올바르게 작동한 이후에는 "Successfully deleted."라는 메세지를 띄우게 하였고, 만약에 만들어진 heap이 없다면 에러메세지를 출력하도록 하였다.
+
+
+``` C
+int findDepth(HEAP h)
+{
+	//Check if the heap exists, and if it does not exist, an error message is output.
+	if (h == NULL)
+	{
+		printf("Error: No heap exists.\n");
+		// Return -1 value to indicate an error.
+		return -1;
+	}
+
+	//Using the correlation between the index of the parent node and the index of the child node, 
+	// divide it by 2 until a value greater than 0 is obtained, and find the number of times it is divided.
+	int depth = 0;
+	int index = h->size;
+
+	while (index > 0)
+	{
+		depth++;
+		index /= 2;
+	}
+
+	return depth;
+}
+```
+
+ findDepth함수는 heap의 depth를 반환해주는 함수이다. 부모노드의 index와 자식노드의 index간의 상관관계를 이용하여 깊이를 측정하는 알고리즘을 작성하였다. 만약 부모노드의 index가 1로 시작하게 된다면 마지막 노드의 index는 heap에 존재하는 모든 노드의 갯수와 같기 때문에, 그 값을 0작은 값이 나올 때 까지 2로 계속 나누어주어 나눈 횟수를 반환하였다. 만약에 만들어진 heap이 없다면 에러메세지를 출력하도록 하였다.
