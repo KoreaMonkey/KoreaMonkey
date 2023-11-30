@@ -80,4 +80,39 @@ int findDepth(HEAP h)
 }
 ```
 
- findDepth함수는 heap의 depth를 반환해주는 함수이다. 부모노드의 index와 자식노드의 index간의 상관관계를 이용하여 깊이를 측정하는 알고리즘을 작성하였다. 만약 부모노드의 index가 1로 시작하게 된다면 마지막 노드의 index는 heap에 존재하는 모든 노드의 갯수와 같기 때문에, 그 값을 0작은 값이 나올 때 까지 2로 계속 나누어주어 나눈 횟수를 반환하였다. 만약에 만들어진 heap이 없다면 에러메세지를 출력하도록 하였다.
+ findDepth함수는 heap의 depth를 반환해주는 함수이다. 부모노드의 index와 자식노드의 index간의 상관관계를 이용하여 깊이를 측정하는 알고리즘을 작성하였다. 만약 부모노드의 index가 1로 시작하게 된다면 마지막 노드의 index는 heap에 존재하는 모든 노드의 갯수와 같기 때문에, 그 값을 0 보다 작은 값이 나올 때 까지 2로 계속 나누어주어 나눈 횟수를 반환하였다. 만약에 만들어진 heap이 없다면 에러메세지를 출력하도록 하였다.
+
+ 
+``` C
+void insertNode(HEAP h, int value)
+{
+	//Check if the heap exists, and if it does not exist, an error message is output.
+	if (h == NULL)
+	{
+		printf("Error: No heap exists.\n");
+		return;
+	}
+
+	// Increase the size of the heap.
+	h->size++ ;
+
+	// Insert the new value at the end of the heap.
+	h->heapData[(h->size)-1] = value;
+
+	int i = (h->size) - 1;
+
+	/*Since the index of the root node starts from 0, 
+	the index of the left child node doubles the index value of the parent node and adds 1, 
+	and the index of the right child node doubles the index value of the parent node and adds 2. 
+	The node to be newly added is placed in the index at the end, and if the value is larger than the parent node, 
+	the swap function is used to change the position.*/
+	while (i >= 1 && h->heapData[i] > h->heapData[(i - 1)/ 2])
+	{
+		swap(&h->heapData[i], &h->heapData[(i - 1) / 2]);
+		i = (i-1) / 2;
+	}
+
+}
+```
+
+ insertNode 함수는 새로운 노드를 기존의 heap에 삽입하고 order property 조정해주는 기능을 한다. 우선 heap의 사이즈를 1 늘린다음 새로 추가할 값을 배열의 가장 마지막 위치에 넣어준다. 그 후 부모노드와의 크기비교를 통해 부모노드보다 값이 크면 swap 함수를 실행하도록 하였고, 반복문을 활용해 order property를 맞출 때 까지 실행하도록 하였다. 루트 노드의 인덱스는 0부터 시작하므로 좌측 자식 노드의 인덱스는 부모 노드의 인덱스 값을 2배로 하여 1을 더한 값이고, 우측 자식 노드의 인덱스는 부모 노드의 인덱스 값을 2배로 하여 2를 더한 값임을 이용했다. 만약에 만들어진 heap이 없다면 에러메세지를 출력하도록 하였다.
