@@ -234,3 +234,49 @@ void selectionSort(int *Array)
 ```
 
 selectionSort함수는 배열에 존재하는 값들을 크기에 맞게 selectionsort하는 기능을 한다. selection sort는 비교를 통해 가장 작은 값을 기억한 후 비교가 완료되면 올바른 위치로 값을 정렬하는 기능이다. 올바른 위치를 찾은 후 swap함수를 사용하여 값들의 교한을 하였으며,  배열의 크기가 20으로 고정되었기에 따로 사이즈와 관련된 변수는 선언하지 않았다.
+
+
+ ``` C
+void quickSort(int* Array, int low, int high)
+{
+	if (low < high)
+	{
+		int pivot = partition(Array, low, high);
+
+		quickSort(Array, low, pivot);
+		quickSort(Array, pivot + 1, high);
+	}
+}
+
+
+int partition(int* Array, int low, int high) {
+	int pivotvalue = Array[low];
+
+	int i = low - 1;
+	int j = high + 1;
+	while (1) {
+		do {
+			j -= 1;
+		} while (Array[j] > pivotvalue && j > i);
+
+		do {
+			i += 1;
+		} while (Array[i] < pivotvalue && i < j);
+
+		if (i < j) {
+			swap(&Array[i], &Array[j]);
+		}
+		else {
+			return j;
+		}
+	}
+}
+```
+
+quickSort함수는 배열에 존재하는 값들을 크기에 맞게 quick sort하는 기능을 한다. 퀵 정렬은 분할정복(divide and conquer) 방식으로 작동하며 그 절차는 다음과 같다.
+
+1. 리스트 가운데서 하나의 원소를 고른다. 이를 피벗(pivot)이라 한다.
+2. 피벗 앞에는 피벗보다 작은 값, 뒤에는 큰 값이 오도록 하여 리스트를 둘로 분할한다.
+3. 분할된 두 개 리스트 각각에 재귀적으로 이 과정을 반복한다.
+
+  작성한 알고리즘에서는 리스트의 가장 첫음에 있는 값을 pivot으로 지정하여 quicksort를 실행하였다. swap함수를 사용하여 값들끼리 위치를 서로 교환하였다.
