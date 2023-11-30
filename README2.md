@@ -1,6 +1,6 @@
-### 프로젝트 2 설명
+## 프로젝트 2 설명
 
-## Heap 관련 함수
+### Heap 관련 함수
 
 ``` C
 void buildHeap(HEAP h, int* array, int arraySize)
@@ -22,3 +22,5 @@ void buildHeap(HEAP h, int* array, int arraySize)
 
 }
 ```
+
+ buildHeap 함수는 배열이 주어졌을 때, heap property를 만족하는 heap을 만들어내는 함수이다. 
