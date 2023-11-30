@@ -116,3 +116,56 @@ void insertNode(HEAP h, int value)
 ```
 
  insertNode 함수는 새로운 노드를 기존의 heap에 삽입하고 order property 조정해주는 기능을 한다. 우선 heap의 사이즈를 1 늘린다음 새로 추가할 값을 배열의 가장 마지막 위치에 넣어준다. 그 후 부모노드와의 크기비교를 통해 부모노드보다 값이 크면 swap 함수를 실행하도록 하였고, 반복문을 활용해 order property를 맞출 때 까지 실행하도록 하였다. 루트 노드의 인덱스는 0부터 시작하므로 좌측 자식 노드의 인덱스는 부모 노드의 인덱스 값을 2배로 하여 1을 더한 값이고, 우측 자식 노드의 인덱스는 부모 노드의 인덱스 값을 2배로 하여 2를 더한 값임을 이용했다. 만약에 만들어진 heap이 없다면 에러메세지를 출력하도록 하였다.
+
+``` C
+int dequeueHeap(HEAP h)
+{
+	//Check if the heap exists, and if it does not exist, an error message is output.
+	if (h == NULL || h->size == 0)
+	{
+		printf("Error: No heap exists.\n");
+		return -1; 
+	}								
+
+	//Saves the value in a variable to return the value that was dequeued.
+	int dequeuedValue = h->heapData[0];
+
+	//Change the root node to the last node.
+	h->heapData[0] = h->heapData[(h->size) - 1];
+
+	// Decrease the size of the heap.
+	h->size--;
+
+	int current = 0;
+
+	//It is the process of properly adjusting the heap property.
+	while ((current * 2) + 1 < h->size )  // Check if there is a child.
+	{
+		int child = (current * 2) + 1;  // Left child index.
+
+		
+		// Compare which of the two children is bigger. 
+		//The previous condition is whether there is a child on the right, and the condition on the right is a size comparison.
+		if (child + 1 < h->size && h->heapData[child] < h->heapData[child + 1]) 
+		{
+			child++;
+		}
+
+		// Swap if the current node is smaller than the larger child
+		if (h->heapData[current] < h->heapData[child])
+		{
+			swap(&h->heapData[current], &h->heapData[child]);
+			current = child;
+		}
+		else
+		{
+			break; 
+		}
+	}
+
+
+	return dequeuedValue;
+}
+```
+
+ dequeueHeap 함수는 루트노드를 heap으로부터 dequeue하는 기능을 한다. dequeue를 실행한 후에 order을 조정해주어 heap의 property를 올바르게 유지하였다. dequeue한 값을 반환하기 위해 변수를 선언해 루트노드의 값을 저장한 후, heap의 가장 마지막 index에 있는 값을 루트노드로 옮긴 후 heap size를 1 감소시켰다. 그 다음 order property를 올바르게 하기 위해 자식노드와의 크기비교를 진행하였다. 앞선 함수에서도 사용하였듯 부모노드와 자식노드의 index 상관관계를 기반으로 order을 맞추었다. 우선 child 간의 크기 비교를 통해 더 큰 child값을 찾은 후 부모노드의 값과 비교를 하여 swap함수를 사용하여 위치를 바꾸어 주었다. order를 조정한 후에는 dequeue한 값을 반환해 주었다.  만약에 만들어진 heap이 없다면 에러메세지를 출력하도록 하였다.
