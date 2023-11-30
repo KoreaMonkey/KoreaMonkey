@@ -198,3 +198,19 @@ void bubbleSort(int* Array)
 }
 ```
  bubbleSort함수는 배열에 존재하는 값들을 크기에 맞게 bubblesort하는 기능을 한다. bubblesort는 배열안에 존재하는 값들을 비교하여, index가 더 큰 것에 저장된 값이 더 작다는 조건이 만족되면 매번 swap을 실행하는 정렬방법이다. 배열의 크기가 20으로 고정되었기에 따로 사이즈와 관련된 변수는 선언하지 않았으며, swap함수를 활용하였다.
+
+  ``` C
+void insertionSort(int* Array)
+{ 
+	for (int i = 1; i < 20; i++) {
+		int key = Array[i];
+		int j = i - 1;
+		while (j >= 0 && Array[j] > key) {
+			swap(&Array[j + 1], &Array[j]);
+			j -= 1;
+		}
+	}
+}
+```
+
+  insertionSort함수는 배열에 존재하는 값들을 크기에 맞게 insertionsort하는 기능을 한다. insertionsort는 배열안에 존재하는 값들을 비교하여 정렬된 부분과 정렬되지 않은부분으로 나누어 정렬되지 않은 부분에서의 값들은 정렬된 부분에 있는 값들과 비교하여 알맞은 위치에 넣는 알고리즘이다. 올바른 위치를 찾은 후 swap함수를 사용하여 값들의 교환을 하였으며,  배열의 크기가 20으로 고정되었기에 따로 사이즈와 관련된 변수는 선언하지 않았다.
