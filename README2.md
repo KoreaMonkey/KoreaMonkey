@@ -169,3 +169,32 @@ int dequeueHeap(HEAP h)
 ```
 
  dequeueHeap 함수는 루트노드를 heap으로부터 dequeue하는 기능을 한다. dequeue를 실행한 후에 order을 조정해주어 heap의 property를 올바르게 유지하였다. dequeue한 값을 반환하기 위해 변수를 선언해 루트노드의 값을 저장한 후, heap의 가장 마지막 index에 있는 값을 루트노드로 옮긴 후 heap size를 1 감소시켰다. 그 다음 order property를 올바르게 하기 위해 자식노드와의 크기비교를 진행하였다. 앞선 함수에서도 사용하였듯 부모노드와 자식노드의 index 상관관계를 기반으로 order을 맞추었다. 우선 child 간의 크기 비교를 통해 더 큰 child값을 찾은 후 부모노드의 값과 비교를 하여 swap함수를 사용하여 위치를 바꾸어 주었다. order를 조정한 후에는 dequeue한 값을 반환해 주었다.  만약에 만들어진 heap이 없다면 에러메세지를 출력하도록 하였다.
+
+
+ ``` C
+void heapSort(HEAP h, int *heapsort, int count)
+{
+	buildHeap(h, heapsort, count);
+}
+```
+
+ heapSort 함수는 배열에 있는 값을 heapsort 하는 함수이다. main함수를 살펴보니 정렬한 결과를 heap의 형태로 출력을 하기에 buildHeap 함수를 활용하였다.
+
+ 
+ ``` C
+void bubbleSort(int* Array)
+{
+	//If the value is small compared, the swap function is executed.
+	for (int i = 0; i < 19; i++)
+	{
+		for (int j = 19 ; j >= i+1; j--)
+		{
+			if (Array[j] < Array[j - 1])
+			{
+				swap(&Array[j], &Array[j - 1]);
+			}
+		}
+	}
+}
+```
+ bubbleSort함수는 배열에 존재하는 값들을 크기에 맞게 bubblesort하는 기능을 한다. bubblesort는 배열안에 존재하는 값들을 비교하여, index가 더 큰 것에 저장된 값이 더 작다는 조건이 만족되면 매번 swap을 실행하는 정렬방법이다. 배열의 크기가 20으로 고정되었기에 따로 사이즈와 관련된 변수는 선언하지 않았으며, swap함수를 활용하였다.
